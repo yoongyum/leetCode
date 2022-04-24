@@ -1,4 +1,10 @@
 class Solution:
     def intersection(self, nums: List[List[int]]) -> List[int]:
-        return sorted(set.intersection(*[set(num) for num in nums]))
+        res =[]
+        for i in range(1,1001):
+            if all(i in l for l in nums):res.append(i)
+                    
+        return res
+                    
+
         
