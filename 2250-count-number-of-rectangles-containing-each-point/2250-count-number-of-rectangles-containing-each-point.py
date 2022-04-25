@@ -1,6 +1,6 @@
+from bisect import bisect
 class Solution:
     def countRectangles(self, rectangles: List[List[int]], points: List[List[int]]) -> List[int]:
-        from bisect import bisect
 
         rectangles = sorted(rectangles, key=lambda x:x[0])
 
