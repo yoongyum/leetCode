@@ -2,12 +2,13 @@ from bisect import bisect
 class Solution:
     def countRectangles(self, rectangles: List[List[int]], points: List[List[int]]) -> List[int]:
 
-        rectangles = sorted(rectangles, key=lambda x:x[0])
-
         rectangle_map = defaultdict(list)
 
         for l, h in rectangles:
             rectangle_map[h].append(l)
+            
+        for k , vl in rectangle_map.items():
+            rectangle_map[k].sort()
 
         def contains(x, y):
             count = 0
