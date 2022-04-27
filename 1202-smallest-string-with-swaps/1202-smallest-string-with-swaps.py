@@ -1,39 +1,38 @@
 class Solution(object):
     def smallestStringWithSwaps(self, s, pairs):
+        """
+        :type s: str
+        :type pairs: List[List[int]]
+        :rtype: str
+        """
         from collections import defaultdict
-
+        d = defaultdict(list)
         s = list(s)
-        nodes = [i for i in range(len(s))]
-        size = [1 for i in range(len(s))]
+        visited = [False for _ in range(len(s))]
 
-        def find(x):
-            if x == nodes[x]:
-                return x
-            nodes[x] = find(nodes[x])
-            return nodes[x]
+        for source, destination in pairs:
+            d[source].append(destination)
+            d[destination].append(source)
 
-        def union(x, y):
-            rootx = find(x)
-            rooty = find(y)
-            if rootx != rooty:
-                nodes[rooty] = rootx
+        def dfs(s, i, chars, indices):
+            if visited[i]:
+                return
+            chars.append(s[i])
+            indices.append(i)
+            visited[i] = True
 
-        for e1, e2 in pairs:
-            union(e1, e2)
-
-        rootToComponent = defaultdict(list)
+            for neigh in d[i]:
+                dfs(s, neigh, chars, indices)
 
         for i in range(len(s)):
-            root = find(i)
-            rootToComponent[root].append(i)
+            if not visited[i]:
+                chars = []
+                indices = []
 
-        for k, indices in rootToComponent.items():
-            chars = []
-            for i in indices:
-                chars.append(s[i])
-            chars = sorted(chars)
-
-            for c, i in zip(chars, indices):
-                s[i] = c
+                dfs(s, i, chars, indices)
+                chars = sorted(chars)
+                indices = sorted(indices)
+                for c, i in zip(chars, indices):
+                    s[i] = c
 
         return "".join(s)
