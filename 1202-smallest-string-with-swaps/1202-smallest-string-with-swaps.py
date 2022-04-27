@@ -1,21 +1,39 @@
-class Solution:
+class Solution(object):
     def smallestStringWithSwaps(self, s, pairs):
-        d = defaultdict(list)
-        for a,b in pairs:
-            d[a].append(b)
-            d[b].append(a)
-        def dfs(x,A):
-            if x in d:
-                A.append(x)
-                for y in d.pop(x):
-                    dfs(y,A)
-        s    = list(s)
-        while d:
-            x = next(iter(d))
-            A = []
-            dfs(x,A)
-            A = sorted(A)
-            B = sorted([ s[i] for i in A ])
-            for i,b in enumerate(B):
-                s[A[i]] = b
-        return ''.join(s)
+        from collections import defaultdict
+
+        s = list(s)
+        nodes = [i for i in range(len(s))]
+        size = [1 for i in range(len(s))]
+
+        def find(x):
+            if x == nodes[x]:
+                return x
+            nodes[x] = find(nodes[x])
+            return nodes[x]
+
+        def union(x, y):
+            rootx = find(x)
+            rooty = find(y)
+            if rootx != rooty:
+                nodes[rooty] = rootx
+
+        for e1, e2 in pairs:
+            union(e1, e2)
+
+        rootToComponent = defaultdict(list)
+
+        for i in range(len(s)):
+            root = find(i)
+            rootToComponent[root].append(i)
+
+        for k, indices in rootToComponent.items():
+            chars = []
+            for i in indices:
+                chars.append(s[i])
+            chars = sorted(chars)
+
+            for c, i in zip(chars, indices):
+                s[i] = c
+
+        return "".join(s)
