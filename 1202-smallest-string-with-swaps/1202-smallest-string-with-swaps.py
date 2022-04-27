@@ -1,38 +1,32 @@
-class Solution(object):
-    def smallestStringWithSwaps(self, s, pairs):
-        """
-        :type s: str
-        :type pairs: List[List[int]]
-        :rtype: str
-        """
-        from collections import defaultdict
-        d = defaultdict(list)
-        s = list(s)
-        visited = [False for _ in range(len(s))]
+class Solution:
+    def union(self, a, b):
+        self.parent[self.find(a)] = self.find(b)
+		
+    def find(self, a):
+        if self.parent[a] != a:
+            self.parent[a] = self.find(self.parent[a])
 
-        for source, destination in pairs:
-            d[source].append(destination)
-            d[destination].append(source)
+        return self.parent[a]
+        
+    def smallestStringWithSwaps(self, s: str, pairs: List[List[int]]) -> str:
+		# 1. Union-Find
+        self.parent = list(range(len(s)))
+        for a, b in pairs:
+            self.union(a, b)
 
-        def dfs(s, i, chars, indices):
-            if visited[i]:
-                return
-            chars.append(s[i])
-            indices.append(i)
-            visited[i] = True
+		# 2. Grouping
+        group = defaultdict(lambda: ([], []))  
+        for i, ch in enumerate(s):
+            parent = self.find(i)
+            group[parent][0].append(i)
+            group[parent][1].append(ch)
 
-            for neigh in d[i]:
-                dfs(s, neigh, chars, indices)
-
-        for i in range(len(s)):
-            if not visited[i]:
-                chars = []
-                indices = []
-
-                dfs(s, i, chars, indices)
-                chars = sorted(chars)
-                indices = sorted(indices)
-                for c, i in zip(chars, indices):
-                    s[i] = c
-
-        return "".join(s)
+		# 3. Sorting
+        res = [''] * len(s)
+        for ids, chars in group.values():
+            ids.sort()
+            chars.sort()
+            for ch, i in zip(chars, ids):
+                res[i] = ch
+                
+        return ''.join(res)
