@@ -3,8 +3,6 @@ class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
         check = [-1]*len(graph)
         
-        print(hash)
-        
         for i in range(len(graph)):
             Q = deque([])
             if check[i] == -1:
@@ -16,8 +14,7 @@ class Solution:
                     if check[n2] == -1:
                         check[n2] = (check[n1] + 1)%2
                         Q.append(n2)
-                    else:
-                        if check[n1] == check[n2]:
+                    elif check[n1] == check[n2]:
                             return False
         
         return True
