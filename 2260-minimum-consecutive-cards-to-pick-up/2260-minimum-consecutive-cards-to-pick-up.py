@@ -1,10 +1,9 @@
 class Solution:
     def minimumCardPickup(self, cards: List[int]) -> int:
-        ans = 100001
-        arr = defaultdict(list)
-        for i,card in enumerate(cards):
-            arr[card].append(i)
-            if len(arr[card]) > 1:
-                ans = min( ans, abs(arr[card].pop(0)-i)+1)
-            
-        return -1 if ans == 100001 else ans
+        last = dict()
+        result = 10**6 + 1
+        for i in range(len(cards)):
+            if cards[i] in last:
+                result = min(result, i - last[cards[i]] + 1);
+            last[cards[i]] = i
+        return -1 if result == 10**6 + 1 else result
