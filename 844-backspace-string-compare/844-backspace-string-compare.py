@@ -8,7 +8,7 @@ class Solution:
         while tmp :
             tt = tmp.pop(0)
             if tt == '#' :
-                if len(ans1) != 0 :
+                if ans1 :
                     ans1.pop()
                 
             else:
@@ -17,11 +17,10 @@ class Solution:
         while tmp :
             tt = tmp.pop(0)
             if tt == '#' :
-                if len(ans2) != 0 :
+                if ans2 :
                     ans2.pop()
                 
             else:
                 ans2.append(tt)
         
-        print(ans1, ans2)
         return ans1 == ans2
