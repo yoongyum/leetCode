@@ -1,12 +1,8 @@
-class Solution:
-    def removeDigit(self, number: str, digit: str) -> str:
-        num = list(number)
-        ans = -1
-        for i,n in enumerate(num):
-            if n == digit:
-                tmp = deepcopy(num)
-                tmp.pop(i)
-                ans = max(int(''.join(tmp)), ans)
-                
-        return str(ans)
-        
+class Solution(object):
+    def removeDigit(self, number, digit):
+        answer= '0'
+        for i in range(len(number)):
+            if(number[i]==digit):
+                if(answer < (number[:i]+number[i+1:])):
+                    answer= number[:i]+number[i+1:]
+        return answer
