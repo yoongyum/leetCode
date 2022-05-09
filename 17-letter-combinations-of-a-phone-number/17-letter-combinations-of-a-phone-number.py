@@ -1,6 +1,6 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        tele = ['###', '###','abc', 'def', 'ghi', 'jkl','mno', 'pqrs', 'tuv','wxyz']
+        tel = ['###', '###','abc', 'def', 'ghi', 'jkl','mno', 'pqrs', 'tuv','wxyz']
         
         length = len(digits)
         if length == 0 : return []
@@ -9,7 +9,7 @@ class Solution:
             if len(curS) == length:
                 ans.append(curS)
             for idx in range(i,length):
-                for c in tele[int(digits[idx])]:
+                for c in tel[int(digits[idx])]:
                     curS += c
                     DFS(idx+1,curS)
                     curS = curS[:-1]
