@@ -1,7 +1,6 @@
 class Solution:
     def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
         answer = []
-        keyword = ""
         for i in range(1,len(searchWord)+1):
             save = []
             for p in products:
