@@ -8,13 +8,11 @@ class Solution:
         
         for box in boxTypes:
             num_boxes, num_units = box[0], box[1]
-            if truckSize >= num_boxes:
-                maxi += num_boxes * num_units
-                truckSize -= num_boxes
-                continue
-            else:
+            if truckSize < num_boxes:
                 maxi += truckSize * num_units
-                break
+                break;
+            maxi += num_boxes * num_units
+            truckSize -= num_boxes
                 
         return maxi
         
