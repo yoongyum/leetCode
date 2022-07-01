@@ -1,7 +1,7 @@
-class Solution(object):
-    def countAsterisks(self, s: str = 'l|*e*et|c**o|*de|') -> int:
-        """
-        :type s: str
-        :rtype: int
-        """
-        return ''.join([char for char in s.split('|')[::2]]).count('*')
+class Solution:
+    def countAsterisks(self, s: str) -> int:
+        ls=s.split('|')[::2]
+        ans=0
+        for i in ls:
+            ans+=i.count('*')
+        return ans
