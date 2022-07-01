@@ -1,10 +1,7 @@
-class Solution:
-    def countAsterisks(self, s: str) -> int:
-        stack= False;
-        answer = 0;
-        for i in range(len(s)):
-            if s[i] == '|':
-                stack = not stack
-            if s[i] == '*' and stack == False:
-                answer+=1
-        return answer
+class Solution(object):
+    def countAsterisks(self, s: str = 'l|*e*et|c**o|*de|') -> int:
+        """
+        :type s: str
+        :rtype: int
+        """
+        return ''.join([char for char in s.split('|')[::2]]).count('*')
