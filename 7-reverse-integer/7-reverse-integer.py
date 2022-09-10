@@ -6,7 +6,7 @@ class Solution:
             reverse = -int(num[:0:-1])
         else:
             reverse = int(num[::-1])
-        print(reverse)
+
         if -math.pow(2,31) <= reverse and reverse <= math.pow(2,31):
             return reverse
         else:
