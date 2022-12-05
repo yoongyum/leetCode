@@ -1,30 +1,22 @@
 class Solution:
     def minScore(self, n: int, roads: List[List[int]]) -> int:
-        m = defaultdict(list)
+        d = list(range(n+1))
         
-        for a,b,dist in roads:
-            m[a].append([b, dist])
-            m[b].append([a, dist])
+        def find(a):
+            nonlocal d
+            if d[a] == a:
+                return a
+            d[a] = find(d[a])
+            return d[a]
+        
+        r = 10001
+        for a, b, c in roads:
+            d[find(a)] = find(b)
             
-        res = math.inf
-        
-        visit = set()
-        
-        def dfs(node):
-            
-            visit.add(node)
-            
-            for nei, cost in m[node]:
-                nonlocal res
-                res = min(res, cost)
-                
-                if nei in visit:
-                    continue
-                dfs(nei)
-                
-        dfs(1)
-        
-        return res
+        for a, b, c in roads:
+            if find(a) == find(1):
+                r = min(r, c)
+        return r
             
             
         
