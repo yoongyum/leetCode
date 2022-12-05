@@ -6,7 +6,7 @@ class Solution:
             m[a].append([b, dist])
             m[b].append([a, dist])
             
-        res = [math.inf]
+        res = math.inf
         
         visit = set()
         
@@ -15,7 +15,8 @@ class Solution:
             visit.add(node)
             
             for nei, cost in m[node]:
-                res[0] = min(res[0], cost)
+                nonlocal res
+                res = min(res, cost)
                 
                 if nei in visit:
                     continue
@@ -23,7 +24,7 @@ class Solution:
                 
         dfs(1)
         
-        return res[0]
+        return res
             
             
         
